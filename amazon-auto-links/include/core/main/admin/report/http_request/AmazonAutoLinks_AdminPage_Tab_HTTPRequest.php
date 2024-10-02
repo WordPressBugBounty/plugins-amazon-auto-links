@@ -50,7 +50,12 @@ class AmazonAutoLinks_AdminPage_Tab_HTTPRequest extends AmazonAutoLinks_AdminPag
     }
         private function ___getCacheDataTable( array $aCache, $sNonce ) {
 
-            $_aData         = $aCache[ 'data' ];
+            $_aData         = $this->getElementAsArray( $aCache, array( 'data' ) ) + array(
+                'body' => '',
+                'headers' => array(),
+                'cookies' => array(),
+            );
+            $aCache[ 'name' ] = isset( $aCache[ 'name' ] ) ? $aCache[ 'name' ] : '';
 
             if ( is_wp_error( $_aData ) ) {
                 return $this->getTableOfArray(
@@ -144,7 +149,7 @@ class AmazonAutoLinks_AdminPage_Tab_HTTPRequest extends AmazonAutoLinks_AdminPag
             );
             return "<div class='go-back'>"
                     . "<span class='dashicons dashicons-arrow-left-alt small-icon'></span>"
-                    . "<a href='{$_sProductsPageURL}'>"
+                    . "<a href='" . esc_url( $_sProductsPageURL ) . "'>"
                         . __( 'Go Back', 'amazon-auto-links' )
                     . "</a>"
                 . "</div>";

@@ -22,16 +22,36 @@ class AmazonAutoLinks_Proxy_Utility extends AmazonAutoLinks_PluginUtility {
      */
     static public function getProxyArguments( $sProxy ) {
 
-        $_aProxy          = parse_url( $sProxy );
+        $_aProxy = parse_url( $sProxy );
+        $_sIP    = self::getIPFromHostName( $_aProxy[ 'host' ] );
         return array(
+            'scheme'   => $_aProxy[ 'scheme' ],
+            'ip'       => $_sIP,
             'host'     => isset( $_aProxy[ 'scheme' ] )
-                ? $_aProxy[ 'scheme' ] . '://' . $_aProxy[ 'host' ]
+                ? $_aProxy[ 'scheme' ] . '://' . $_sIP  // cURL does not accept domain names
                 : $_aProxy[ 'host' ],
             'port'     => $_aProxy[ 'port' ],
             'username' => isset( $_aProxy[ 'user' ] ) ? $_aProxy[ 'user' ] : null,
             'password' => isset( $_aProxy[ 'pass' ] ) ? $_aProxy[ 'pass' ] : null,
             'raw'      => $sProxy,
         );
+
+    }
+
+    /**
+     * @since  5.4.3
+     * @return string The looked-up IP address or unmodified host name
+     */
+    static public function getIPFromHostName( $sHostNameOrIP ) {
+
+        // Return if it's an IP address
+        // @remark This checks whether it is a valid IPv4 address.
+        // @todo research a way to check whether IPv6 address
+        if ( ( boolean ) ip2long( $sHostNameOrIP ) ) {
+            return $sHostNameOrIP;
+        }
+
+        return gethostbyname( $sHostNameOrIP );
 
     }
 

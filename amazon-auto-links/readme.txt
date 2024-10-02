@@ -6,7 +6,7 @@ Requires at least:  3.4
 Requires PHP:       5.2.4
 Tested up to:       6.5.2
 Requires MySQL:     5.0.3
-Stable tag:         5.4.2
+Stable tag:         5.4.3
 License:            GPLv2 or later
 License URI:        http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -184,7 +184,7 @@ Yes. Otherwise, you don't get any revenue. You can get it by signing up for [Ama
 
 = Do I need API Keys? =
 
-For the category unit type, no, but for PA-API unit types, yes. You need to issue a pair of API keys on the Amazon Associates logged-in page.
+For the Category unit type, no, but for other unit types, yes. You need to issue a pair of API keys on the Amazon Associates logged-in page.
 
 For that, you need to have an account with [Amazon Product Advertising API](https://affiliate-program.amazon.com/gp/advertising/api/detail/main.html). The keys can be obtained by logging in to [Amazon Web Services](http://aws.amazon.com/) and you need to get **Access Key ID** (public key) and **Secret Access Key** (private key).
 
@@ -405,8 +405,18 @@ You can check if your keys are valid with [Scratchpad](https://webservices.amazo
 
 == Changelog ==
 
-#### 5.4.2 - 04/17/2024
-- Added a method to avoid the PHP warning, "gzuncompress(): data error"
+#### 5.4.2 - 10/02/2024
+- Fixed a bug that the `sort` shortcode argument did not take effect when used with the `asin` argument.
+- Fixed a PHP critical error saying "Uncaught ValueError: DOMDocument::loadHTML(): Argument #1 ($source) must not be empty."
+- Added the **Server** section in the **About** tab of the **Help** page.
+- Added the ability to automatically update the default options of Country and Associate ID when the options of the Associates section are updated.
+- Changed to show some About details only when the Debug Mode with back-end is enabled.
+- Fixed a PHP warning saying "Deprecated: preg_replace(): Passing null to parameter #3" in PHP 8.2.
+- Changed the timing of applying the sort order of PA-API Item-Lookup units.
+- Added the ability to accept host names for HTTP proxies
+- Fixed the broken format in the unusable HTTP proxy list
+- Fixed a bug that the `aal_filter_plugin_slug_oembed` filter hook did not function
+- Fixed raw strings to be sanitized
 
 #### Old Log
 For old change logs, see [here](https://github.com/michaeluno/amazon-auto-links/blob/master/changelog.md).
